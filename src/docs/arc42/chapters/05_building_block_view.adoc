@@ -1,0 +1,119 @@
+:jbake-title: Building Block View
+:jbake-type: page_toc
+:jbake-status: published
+:jbake-menu: arc42
+:jbake-order: 5
+:filename: /chapters/05_building_block_view.adoc
+ifndef::imagesdir[:imagesdir: ../../images]
+
+:toc:
+
+
+
+[[section-building-block-view]]
+
+
+== Building Block View
+
+=== Backend infrastructure
+* Database: Stores information about restaurants, menus, orders, and user profiles.
+* APIs: Facilitate communication between mobile apps and the backend. APIs handle order placement, and real-time tracking.
+
+=== Order service
+* Order Processing: Handles incoming orders, confirms availability, and notifies couriers.
+
+=== Restaurant service
+* Menu Management: Allows restaurants owners to update menus, prices, and visibility.
+
+=== Delivery service
+* Driver Recruitment: Building a network of reliable delivery personnel.
+* Dispatch System: Assigns orders to available couriers based on proximity and workload.
+
+
+=== Level 1
+==== FDS White box 
+
+image::Contain_Blackbox.png["FDS White box"]
+
+==== Contain Black box.
+
+[options="header",cols="1,2"]
+|===
+|Building block | Description
+
+| Restaurant | Menu Management: Allows restaurants owners to update menus, prices, and visibility.   
+| Order | Order Processing: Handles incoming orders, confirms availability, and notifies couriers.
+| Delivery | Dispatch System: Assigns orders to available couriers based on proximity and workload.
+
+|===
+
+
+=== Level 2
+==== Restaurant White box 
+
+image::Restaurant_Whitebox.png["Restaurant White box "]
+
+==== Contain Black box.
+
+[options="header",cols="1,2"]
+|===
+|Building block | Description
+
+| User | Register: Allows system administrators to register new restaurants user.   
+| Login | Authentication and authorization: Allows grant privileges to user for controlling security.
+| Restaurant | Update profile: control the visibility of restaurant and other features.
+| Menu | Item : Allow user to add item, set price and description, also control the activation of item.
+| Category | Category: Allows system admin and user to add or modify category.
+
+|===
+
+
+==== Order White box 
+
+image::OrderService-white_box_Level_1.drawio.png["Order White box "]
+
+==== Contain Black box.
+
+[options="header",cols="1,2"]
+|===
+|Building block | Description
+
+| Order | Allow customer to add items to thier cart and place order.   
+| Order Item | Store the specified order's items.
+| Order Status | Store and Control order status in sequence.
+| Payment | Handle payment process when placing order.
+| Payment Method | Allow user to select the payment method.
+| Payment Status | Store the specified payment for an order.
+
+|===
+
+
+=== Level 3
+
+==== Order White box
+
+image::OrderService-white_box_Level_2_order.drawio.png["Order White box"]
+
+==== Payment White box
+
+image::OrderService-white_box_Level_2_payment.drawio.png["Payment White box"]
+
+
+==== Restaurant White box
+image::restaurant_White_box.png["Restaurant White box"]
+
+==== Contained black boxes
+
+[options="header",cols="1,2"]
+|===
+|ExploreRestaurant(show) | Allows to browse available restaurants.
+|===
+
+==== Restaurant Category White box
+image::restaurant_Category_Whitebox.png["Restaurant Category White box"]
+
+==== Restaurant Item White box
+image::restaurant_Item_Whitebox.png["Restaurant item White box"]
+
+
+

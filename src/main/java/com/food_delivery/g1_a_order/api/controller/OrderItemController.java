@@ -1,41 +1,48 @@
 package com.food_delivery.g1_a_order.api.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.food_delivery.g1_a_order.api.dto.orderItem.OrderItemShowDto;
 import com.food_delivery.g1_a_order.persistent.enum_.ResponseMsg;
 import com.food_delivery.g1_a_order.service.OrderItemService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
 
+import com.food_delivery.g1_a_order.api.dto.response.ErrResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("api/v1/orderItem")
 public class OrderItemController {
 
-    OrderItemService itemService;
+    private final OrderItemService itemService;
 
-    @DeleteMapping("{id}/delete")
-    public ResponseEntity<String> deleteOrderItem(@PathVariable("id") Long id) {
+    @DeleteMapping("{itemId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "No item found or order already confirmed", content = @Content(schema = @Schema(implementation = ErrResponse.class)))
+    })
+    public ResponseEntity<String> deleteOrderItem(@PathVariable("itemId") Long itemId) {
 
-        itemService.deleteOrderItem(id);
+        itemService.deleteOrderItem(itemId);
         return ResponseEntity.ok(ResponseMsg.SUCCESS.message);
     }
 
     @GetMapping("order/{orderId}")
-    public List<OrderItemShowDto> getOrderItemByOrder(@PathVariable("orderId") Long orderId) {
-        
-        return itemService.getOrderItemByOrder(orderId);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OrderItemShowDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No order found with provided id", content = @Content(schema = @Schema(implementation = ErrResponse.class))),
+    })
+    public ResponseEntity<List<OrderItemShowDto>> getOrderItemByOrder(@PathVariable("orderId") Long orderId) {
 
-        
+        return ResponseEntity.ok(itemService.getOrderItemByOrder(orderId));
+
     }
-    
+
 }

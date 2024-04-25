@@ -1,0 +1,68 @@
+:jbake-title: System Scope and Context
+:jbake-type: page_toc
+:jbake-status: published
+:jbake-menu: arc42
+:jbake-order: 3
+:filename: /chapters/03_system_scope_and_context.adoc
+ifndef::imagesdir[:imagesdir: ../../images]
+
+:toc:
+
+
+
+[[section-system-scope-and-context]]
+== System Scope and Context
+
+This project aims to develop a comprehensive software system facilitating online meal ordering and delivery services for customers. The primary objective is to streamline the process of order placement, tracking, and delivery coordination for enhanced efficiency and customer satisfaction.
+
+=== Key Features
+
+. Online Ordering: The system will enable customers to conveniently place meal orders through a user-friendly online platform.
+. Delivery Coordination: Efficient management tools will be implemented to facilitate the seamless coordination of deliveries, ensuring timely and accurate fulfillment of orders.
+. Order Tracking: Customers will have access to real-time order tracking functionality, allowing them to monitor the status of their orders from placement to delivery.
+
+
+==== Use Case Diagram
+
+image::use-case.drawio.png["Use Case Diagram"]
+=== Business Context
+
+
+==== Block Diagram
+
+image::Block_Diagram.drawio.png["Block Diagram"]
+
+Based on the diagram above, the inputs and outputs of the food delivery system can be On this business context diagram, the communication partners, inputs, and outputs of the food delivery system can be identified as follows:
+
+.Communication Partners
+* Customer: Represents the customers who interact with the system to place orders and track their delivery.
+* Restaurant: Represents the restaurants that provide their menus, manage orders, and update order status.
+* Courier: Represents the personnel responsible for delivering the orders to the customers.
+* Platform Admin: Represents the personnel who register or deregister restaurant, query orders, and mange category.
+
+.Inputs
+* Customer Orders: Customers provide their order details, such as the items they want to order and the delivery address.
+* Restaurant Information: Restaurants provide their menus, availability, and other relevant information to the system.
+* Delivery Updates: Delivery personnel provide updates on the status of the orders, such as when the order is picked up, in transit, or delivered.
+
+.Outputs
+* Order Confirmation: The system sends a confirmation message to the customer, indicating that their order has been received and is being processed.
+* Order Status Updates: The system sends updates to the customer regarding the status of their order.
+* Delivery Confirmation: The system sends a confirmation message to the restaurant, indicating that the order has been delivered to the customer.
+
+
+
+=== Technical Context
+
+
+image::tech-context.drawio.png["Technical Context"]
+
+[options="header",cols="1,2"]
+|===
+|Element | Description
+| Human Actors | Shows the Human Actors Who will use the system.   
+| Device browser | Shows the interface that human actors will interact with the system.
+| Application server | Shows the system with its micro services.
+| API for business functions HTTPS/REST| Shows the protocols and channels the system and Human Actors will use for interactions.
+|===
+

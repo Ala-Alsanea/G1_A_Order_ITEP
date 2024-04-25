@@ -1,47 +1,32 @@
 package com.food_delivery.g1_a_order.persistent.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.food_delivery.g1_a_order.persistent.entity.base.BaseEntity;
 import com.food_delivery.g1_a_order.persistent.enum_.OrderStatusEnum;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-// @Data
 @Setter
 @Getter
 @Builder
 @Entity
 @ToString
 @Table(name = "orders")
-public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    private Long id;
+public class Order extends BaseEntity {
 
     @NotNull
     private Long customerId;
 
-    private Long customerAddressId;
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = true, referencedColumnName = "id")
+    private Address address;
 
     @NotNull
     private Long restaurantId;
@@ -53,16 +38,29 @@ public class Order {
     @Transient
     private float totalPrice;
 
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt;
-
     @NotNull
     @Builder.Default
     @ManyToOne
     private OrderStatus orderStatus = OrderStatusEnum.CART.status;
 
+    @ManyToOne
+    @JoinColumn(name = "payment_id", nullable = true,referencedColumnName = "id")
+    private Payment payment;
     @NotNull
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>() ;
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+        this.updatedAt = LocalDateTime.now();
+
+    }
+
+    public float getTotalPrice() {
+        for (OrderItem item : getOrderItems()) {
+            this.totalPrice += item.getPrice() * item.getQuantity();
+        }
+        return this.totalPrice;
+    }
+
 }

@@ -3,6 +3,8 @@
 # /src/main/resources/application.properties
 /src/main/resources/secrets.properties
 
+.env
+/src/docs/images/.$*
 
 
 /target/
